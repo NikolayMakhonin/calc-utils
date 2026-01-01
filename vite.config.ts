@@ -62,6 +62,11 @@ export default defineConfig(({ mode, isSsrBuild, command }) => {
       ssr: true,
     },
     customLogger: logger,
+    optimizeDeps: {
+      // Prevent playwright error: Could not resolve "chromium-bidi/lib/cjs/bidiMapper/BidiMapper"
+      // @see https://github.com/microsoft/playwright/issues/33031#issuecomment-2405403388
+      exclude: ['chromium-bidi'],
+    },
     test: {
       include: [
         '**/*.{test,node,perf,manual,api,e2e}.{js,ts}',
@@ -88,15 +93,6 @@ export default defineConfig(({ mode, isSsrBuild, command }) => {
         cleanOnRerun: true,
         reportOnFailure: true,
       },
-
-      // It doesn't work at all: https://github.com/vitest-dev/vitest/issues/3434
-      // docs: https://vitest.dev/guide/browser.html
-      // browser: {
-      //   name: 'chromium',
-      //   enabled: true,
-      //   provider: 'playwright',
-      //   headless: true,
-      // },
     },
   }
 })

@@ -1,0 +1,48 @@
+import { defineConfig, mergeConfig } from 'vitest/config'
+import configBase from './vite.config'
+
+export default defineConfig(env =>
+  mergeConfig(configBase(env), {
+    test: {
+      projects: [
+        {
+          extends: true,
+          test: {
+            name: {
+              label: 'node',
+              // color: 'blue',
+            },
+            include: [
+              '**/*.{test,node}.{js,ts}',
+              '!**/*.{browser,perf,manual,api,e2e}.{js,ts}',
+            ],
+          },
+        },
+        {
+          extends: true,
+          test: {
+            name: {
+              label: 'browser',
+              // color: 'green',
+            },
+            include: [
+              '**/*.{test,browser}.{js,ts}',
+              '!**/*.{node,perf,manual,api,e2e}.{js,ts}',
+            ],
+            browser: {
+              enabled: true,
+              provider: 'playwright',
+              headless: true,
+              // https://vitest.dev/guide/browser/playwright
+              instances: [
+                { browser: 'chromium' },
+                { browser: 'firefox' },
+                { browser: 'webkit' },
+              ],
+            },
+          },
+        },
+      ],
+    },
+  }),
+)
