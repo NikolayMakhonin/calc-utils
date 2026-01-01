@@ -47,19 +47,20 @@ export default defineConfig(({ mode, isSsrBuild, command }) => {
       include: [
         '**/*.{test,node,perf,manual,api,e2e}.{js,ts}',
         '!**/{tmp,temp,-tmp,-temp}/**',
+        '!./*.ts',
       ],
       testTimeout: 10000,
       hookTimeout: 10000,
 
       // docs: https://vitest.dev/guide/features.html#environment-variables
-      env: loadEnv(mode, process.cwd(), ''),
+      // env: loadEnv(mode, process.cwd(), ''),
 
       coverage: {
         provider: 'v8',
         include: ['src/**'],
         // vitest исключает файлы тестов, принудитеьно возвращаем их обратно
         exclude: [
-          '!**/*.{test,node,perf,manual,api,e2e}.{js,ts}',
+          '!**/*.{test,node,browser,perf,manual,api,e2e}.{js,ts}',
           '**/{tmp,temp,-tmp,-temp}/**',
         ],
         extension: ['.js', '.ts'],

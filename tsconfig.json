@@ -28,8 +28,7 @@
     "useUnknownInCatchVariables": false,
     "baseUrl": ".",
     "paths": {
-      "src": ["./src"],
-      "src/*": ["./src/*"]
+      "src/*": ["src/*"]
     },
     "lib": ["ESNext", "DOM", "DOM.Iterable", "WebWorker"]
   },

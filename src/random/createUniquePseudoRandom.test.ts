@@ -28,7 +28,7 @@ describe('createUniquePseudoRandom', () => {
         expect(values.has(value)).toBe(true)
       }
     }
-  })
+  }, 10000)
 
   it('all numbers', () => {
     const count = UNIQUE_PSEUDO_RANDOM_MAX_COUNT
