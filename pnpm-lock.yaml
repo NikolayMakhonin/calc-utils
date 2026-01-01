@@ -42,6 +42,9 @@ importers:
       '@flemist/test-utils':
         specifier: 1.0.4
         version: 1.0.4(expect@30.2.0)
+      '@flemist/test-variants':
+        specifier: 2.0.0-alpha
+        version: 2.0.0-alpha
       '@rollup/plugin-alias':
         specifier: 3.1.9
         version: 3.1.9(rollup@2.75.7)
@@ -722,8 +725,16 @@ packages:
     peerDependencies:
       expect: '>=24'
 
+  '@flemist/test-variants@2.0.0-alpha':
+    resolution: {integrity: sha512-/5H887PbV+TRcPayMRm0T9CuhoIMvosqt2onEXKBWybfpGGI/QU+/aYIk1Cj/hco2fZEKU03gztxIDwiQYF4EQ==}
+    engines: {node: '>=10.4.0', pnpm: '>=7.1.6'}
+
   '@flemist/time-controller@1.0.4':
     resolution: {integrity: sha512-u/R76Pfq3UOBLXNOMAW+zwL5a9U7UhirAJLFMnmJ3JISmomxb+um0wD3v1l6v6vZi+KbqwEVQYnEpv/o37jQug==}
+    engines: {node: '>=10.4.0'}
+
+  '@flemist/time-limits@1.0.3':
+    resolution: {integrity: sha512-d078kPLsAxf5GKC4WqChCdxFqCUVLiCTtbKFo3oz7GuH9zB/18n+MZyljTyMZ7IoSw2FoHC4q879918rJYzeJw==}
     engines: {node: '>=10.4.0'}
 
   '@flemist/time-limits@2.0.4':
@@ -3499,6 +3510,9 @@ packages:
   tslib@2.4.0:
     resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
 
+  tslib@2.5.3:
+    resolution: {integrity: sha512-mSxlJJwl3BMEQCUNnxXBU9jP4JBktcEGhURcPR6VQVlnP0FdDEsIaz0C35dXNGLyRfrATNofF0F5p2KPxQgB+w==}
+
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
@@ -4512,9 +4526,24 @@ snapshots:
       expect: 30.2.0
       tslib: 2.8.1
 
+  '@flemist/test-variants@2.0.0-alpha':
+    dependencies:
+      '@flemist/abort-controller-fast': 1.0.0
+      '@flemist/async-utils': 1.2.8
+      '@flemist/time-limits': 1.0.3
+      tslib: 2.5.3
+
   '@flemist/time-controller@1.0.4':
     dependencies:
       '@flemist/pairing-heap': 1.0.0
+      tslib: 2.8.1
+
+  '@flemist/time-limits@1.0.3':
+    dependencies:
+      '@flemist/abort-controller-fast': 1.0.0
+      '@flemist/async-utils': 1.2.8
+      '@flemist/priority-queue': 1.0.1
+      '@flemist/time-controller': 1.0.4
       tslib: 2.8.1
 
   '@flemist/time-limits@2.0.4':
@@ -7748,6 +7777,8 @@ snapshots:
   tslib@1.14.1: {}
 
   tslib@2.4.0: {}
+
+  tslib@2.5.3: {}
 
   tslib@2.8.1: {}
 

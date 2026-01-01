@@ -25,7 +25,6 @@
     "allowSyntheticDefaultImports": true,
     "downlevelIteration": true,
     "newLine": "LF",
-    "strictNullChecks": true,
     "importsNotUsedAsValues": "remove",
     "preserveValueImports": false,
     "typeRoots": [

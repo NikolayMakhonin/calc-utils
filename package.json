@@ -1,7 +1,7 @@
 {
-  "name": "@flemist/math-utils",
+  "name": "@flemist/calc-utils",
   "version": "1.0.0",
-  "description": "Simple math utils",
+  "description": "Simple calc utils",
   "main": "dist/lib/index.cjs",
   "module": "dist/lib/index.mjs",
   "types": "dist/lib/index.d.ts",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NikolayMakhonin/math-utils.git"
+    "url": "git+https://github.com/NikolayMakhonin/calc-utils.git"
   },
   "keywords": [],
   "author": {
@@ -20,9 +20,9 @@
   },
   "license": "Unlimited Free",
   "bugs": {
-    "url": "https://github.com/NikolayMakhonin/math-utils/issues"
+    "url": "https://github.com/NikolayMakhonin/calc-utils/issues"
   },
-  "homepage": "https://github.com/NikolayMakhonin/math-utils",
+  "homepage": "https://github.com/NikolayMakhonin/calc-utils",
   "publishConfig": {
     "access": "public"
   },
@@ -56,6 +56,7 @@
     "@flemist/karma-custom-launcher": "0.0.0",
     "@flemist/mcp-project-tools": "3.0.19",
     "@flemist/test-utils": "1.0.4",
+    "@flemist/test-variants": "2.0.0-alpha",
     "@rollup/plugin-alias": "3.1.9",
     "@rollup/plugin-babel": "5.3.1",
     "@rollup/plugin-commonjs": "=21.1.0",
