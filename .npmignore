@@ -2,4 +2,5 @@
 !/dist
 /dist/**/test/**
 /dist/**/*.test.*
+/dist/**/*.stress.*
 **/-deprecated/**
