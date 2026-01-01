@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+// @ai ChatGPT
+
 import * as fs from 'fs'
 import * as path from 'path'
 
@@ -10,6 +12,9 @@ type Options = {
 
 type PackageJson = {
   dependencies?: Record<string, string>
+  devDependencies?: Record<string, string>
+  peerDependencies?: Record<string, string>
+  optionalDependencies?: Record<string, string>
   [key: string]: unknown
 }
 
@@ -60,79 +65,147 @@ async function fetchMeta(name: string): Promise<NpmMeta> {
 }
 
 function isOlderThan(date: string, days: number): boolean {
-  const result = new Date(date).getTime() < Date.now() - days * 86_400_000
-  if (debug) log('isOlderThan', date, days, '→', result)
-  return result
+  return new Date(date).getTime() < Date.now() - days * 86_400_000
+}
+
+function isStableVersion(version: string): boolean {
+  // any version with '-' after digits is pre-release
+  const hasDash = version.includes('-')
+  if (debug && hasDash) log('Skipping pre-release version:', version)
+  return !hasDash
 }
 
 function latestOlderThan(meta: NpmMeta, days: number): null | string {
-  if (debug) log('Selecting latest older than', days, 'days')
+  if (debug) log('Selecting latest stable older than', days, 'days')
   const entries = Object.entries(meta.time)
   const filtered: [string, number][] = []
+  let minTimestamp = Infinity
+  let maxTimestamp = 0
+
   for (let i = 0, len = entries.length; i < len; i++) {
-    const [ver, time] = entries[i]
-    if (ver === 'created' || ver === 'modified') continue
-    const t = new Date(time).getTime()
-    if (t < Date.now() - days * 86_400_000) filtered.push([ver, t])
+    const [version, date] = entries[i]
+    if (version === 'created' || version === 'modified') continue
+    if (!isStableVersion(version)) continue
+    const versionTimestamp = new Date(date).getTime()
+    if (versionTimestamp < minTimestamp) minTimestamp = versionTimestamp
+    if (versionTimestamp > maxTimestamp) maxTimestamp = versionTimestamp
+    if (versionTimestamp < Date.now() - days * 86_400_000)
+      filtered.push([version, versionTimestamp])
   }
+
+  if (debug) {
+    log('Version date range:', {
+      earliest: new Date(minTimestamp).toISOString(),
+      latest: new Date(maxTimestamp).toISOString()
+    })
+  }
+
   if (!filtered.length) {
-    if (debug) log('No older versions found')
+    if (debug) log('No stable versions older than', days, 'days')
     return null
   }
+
   filtered.sort((a, b) => b[1] - a[1])
   const selected = filtered[0][0]
-  if (debug) log('Selected older version:', selected)
+  if (debug) log('Selected older stable version:', selected)
   return selected
 }
 
-async function fixDeps(
+async function fixDepsGroup(
   deps: Record<string, string>,
-  options: Options
+  options: Options,
+  groupName: string
 ): Promise<FixedDeps> {
-  if (debug) log('Fixing dependencies:', Object.keys(deps))
+  if (debug) log(`Fixing ${groupName}:`, Object.keys(deps))
   const fixed: FixedDeps = {}
   const keys = Object.keys(deps)
+
   for (let i = 0, len = keys.length; i < len; i++) {
     const name = keys[i]
     const verRaw = deps[name]
     const current = verRaw.replace(/^[^\d]*/, '')
-    if (debug) log(`Processing ${name}@${current}`)
+    if (debug) log(`Processing ${groupName} ${name}@${current}`)
     const meta = await fetchMeta(name)
     const time = meta.time
     const currentTime = time?.[current]
-    const needs =
-      options.updateAll || !currentTime || isOlderThan(currentTime, options.maxAgeDays)
+
+    const isTooNew = !currentTime || !isOlderThan(currentTime, options.maxAgeDays)
+    const needs = options.updateAll || isTooNew
     if (!needs) {
       if (debug) log('No update needed for', name)
       continue
     }
+
     const latest = latestOlderThan(meta, options.maxAgeDays)
     if (latest) {
       fixed[name] = `^${latest}`
       if (debug) log('Will fix', name, '→', latest)
     } else {
-      if (debug) log('No suitable version found for', name)
+      const allStable = Object.keys(time)
+        .filter(v => v !== 'created' && v !== 'modified' && isStableVersion(v))
+        .sort(
+          (a, b) => new Date(time[b]).getTime() - new Date(time[a]).getTime()
+        )
+      const newest = allStable[0]
+      if (debug)
+        log(
+          'No suitable stable version found for',
+          name,
+          '| Newest stable available:',
+          newest,
+          time[newest]
+        )
     }
   }
-  if (debug) log('Fixing complete. Fixed deps:', fixed)
+
+  if (debug) log(`Finished ${groupName}. Fixed:`, fixed)
   return fixed
 }
 
 async function main(): Promise<void> {
-  if (debug) log('--- dep-fix started ---')
+  const start = Date.now()
+  if (debug) log('--- dep-fix started ---', new Date(start).toISOString())
+
   const options = parseArgs()
   const pkg = await readJson(PKG_PATH)
-  const deps = pkg.dependencies || {}
-  const fixed = await fixDeps(deps, options)
-  const hasChanges = Object.keys(fixed).length > 0
-  if (hasChanges) {
-    pkg.dependencies = { ...deps, ...fixed }
+
+  const allGroups: Record<string, Record<string, string>> = {
+    dependencies: pkg.dependencies || {},
+    devDependencies: pkg.devDependencies || {},
+    peerDependencies: pkg.peerDependencies || {},
+    optionalDependencies: pkg.optionalDependencies || {}
+  }
+
+  const totalFixed: Record<string, FixedDeps> = {}
+  for (const [group, deps] of Object.entries(allGroups)) {
+    if (!Object.keys(deps).length) continue
+    totalFixed[group] = await fixDepsGroup(deps, options, group)
+  }
+
+  let changed = false
+  for (const [group, fixed] of Object.entries(totalFixed)) {
+    if (Object.keys(fixed).length) {
+      ;(pkg as any)[group] = { ...(pkg as any)[group], ...fixed }
+      changed = true
+    }
+  }
+
+  if (changed) {
     await writeJson(PKG_PATH, pkg)
-    log('Dependencies fixed:', fixed)
+    log('Dependencies fixed:', totalFixed)
   } else {
     log('No dependencies need fixing')
   }
-  if (debug) log('--- dep-fix finished ---')
+
+  const end = Date.now()
+  if (debug)
+    log(
+      '--- dep-fix finished ---',
+      new Date(end).toISOString(),
+      '| Duration:',
+      end - start,
+      'ms'
+    )
 }
 
 main().catch((err: Error) => {
