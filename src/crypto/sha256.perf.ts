@@ -10,7 +10,7 @@ describe('calcSha256', function () {
     const len = 10
     let bytes = crypto.randomBytes(len)
     const result = calcPerformance({
-      time : 60000,
+      time : 10000,
       funcs: [
         () => {},
         () => {

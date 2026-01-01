@@ -30,8 +30,8 @@ function _round(
   }
 
   if (
-    (digitsType === PRECISION && digits < MAX_FLOAT_PRECISION)
-    || digitsType === FRACTION
+    (digitsType === PRECISION && digits < MAX_FLOAT_PRECISION) ||
+    digitsType === FRACTION
   ) {
     value = fixFloat(value)
   }
@@ -61,9 +61,9 @@ function _round(
   switch (roundType) {
     case ROUND:
       increment =
-        ch > 5
-        || (!negative && ch === 5)
-        || (negative && ch === 5 && index < len - 1)
+        ch > 5 ||
+        (!negative && ch === 5) ||
+        (negative && ch === 5 && index < len - 1)
       break
     case FLOOR:
       increment = negative
@@ -89,9 +89,9 @@ function _round(
 
   if (!increment) {
     return parseFloat(
-      (negative ? '-' : '')
-        + str.slice(0, index === 2 ? 1 : index)
-        + str.slice(len),
+      (negative ? '-' : '') +
+        str.slice(0, index === 2 ? 1 : index) +
+        str.slice(len),
     )
   }
 
@@ -108,38 +108,38 @@ function _round(
   return parseFloat((negative ? '-' : '') + '10' + str.slice(len))
 }
 
-/** Safe rounding to N significant digits; prevents "messy" float tails in toString(). */
+/** @deprecated (work with number string instead of calc) Safe rounding to N significant digits; prevents "messy" float tails in toString(). */
 export function roundPrecision(value: number, digits: number) {
   return _round(value, digits, PRECISION, ROUND)
 }
 
-/** Safe floor to N significant digits; prevents "messy" float tails in toString(). */
+/** @deprecated (work with number string instead of calc) Safe floor to N significant digits; prevents "messy" float tails in toString(). */
 export function floorPrecision(value: number, digits: number) {
   return _round(value, digits, PRECISION, FLOOR)
 }
 
-/** Safe ceil to N significant digits; prevents "messy" float tails in toString(). */
+/** @deprecated (work with number string instead of calc) Safe ceil to N significant digits; prevents "messy" float tails in toString(). */
 export function ceilPrecision(value: number, digits: number) {
   return _round(value, digits, PRECISION, CEIL)
 }
 
-/** Safe rounding to N decimal places; prevents "messy" float tails in toString(). */
+/** @deprecated (work with number string instead of calc) Safe rounding to N decimal places; prevents "messy" float tails in toString(). */
 export function roundFraction(value: number, fractionDigits?: number) {
   return _round(value, fractionDigits || 0, FRACTION, ROUND)
 }
 
-/** Safe floor to N decimal places; prevents "messy" float tails in toString(). */
+/** @deprecated (work with number string instead of calc) Safe floor to N decimal places; prevents "messy" float tails in toString(). */
 export function floorFraction(value: number, fractionDigits?: number) {
   return _round(value, fractionDigits || 0, FRACTION, FLOOR)
 }
 
-/** Safe ceil to N decimal places; prevents "messy" float tails in toString(). */
+/** @deprecated (work with number string instead of calc) Safe ceil to N decimal places; prevents "messy" float tails in toString(). */
 export function ceilFraction(value: number, fractionDigits?: number) {
   return _round(value, fractionDigits || 0, FRACTION, CEIL)
 }
 
 /**
- * Safe cleanup float to prevent "messy" float tails in toString()
+ * @deprecated (work with number string instead of calc) Safe cleanup float to prevent "messy" float tails in toString()
  * @example 0.0000000000001 => 0
  * @example 0.9999999999999 => 1
  */

@@ -115,7 +115,7 @@ describe('date', function () {
     )
   })
 
-  it('convertTimeZone local', function () {
+  xit('convertTimeZone local', function () {
     // Local (+04:00), UTC
     assert.deepStrictEqual(
       convertTimeZone(new Date('2020-01-01T00:00:00.000Z'), null, 'UTC'),

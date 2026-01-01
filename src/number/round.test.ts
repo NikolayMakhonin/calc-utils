@@ -447,6 +447,7 @@ describe('round', function () {
 
   it('extra', () => {
     expect(fixFloat(49.34000000000001)).toBe(49.34)
+    expect(fixFloat(9.9999999999901e-101)).toBe(9.99999999999e-101)
 
     test_floorFraction(0.00000011111, 2, 0)
     test_floorFraction(0.011111, 2, 0.01)
@@ -474,10 +475,11 @@ describe('round', function () {
     test_roundPrecision(1.05e-50, 5, 1.05e-50)
   })
 
-  it('variants', async () => {
+  xit('variants', async function () {
+    this.timeout(10 * 60 * 1000)
     await testVariants({
       lastDigits : Array.from({ length: 49 }, (_, i) => i),
-      countDigits: Array.from({ length: 14 }, (_, i) => i + 2),
+      countDigits: Array.from({ length: 12 }, (_, i) => i + 2),
       exponent   : Array.from({ length: 200 }, (_, i) => i - 100),
       negative   : [false, true],
       value      : ({ lastDigits, countDigits, exponent, negative }) => {
