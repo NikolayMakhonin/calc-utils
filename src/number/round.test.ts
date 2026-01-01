@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest'
 import {
   ceilFraction,
   ceilPrecision,
@@ -9,7 +10,7 @@ import {
 } from './round'
 import { createTestVariants } from '@flemist/test-variants'
 
-describe('round', function () {
+describe('round', () => {
   function createValue({
     lastDigits,
     countDigits,
@@ -475,14 +476,13 @@ describe('round', function () {
     test_roundPrecision(1.05e-50, 5, 1.05e-50)
   })
 
-  xit('variants', async function () {
-    this.timeout(10 * 60 * 1000)
+  it.skip('variants', async () => {
     await testVariants({
-      lastDigits : Array.from({ length: 49 }, (_, i) => i),
+      lastDigits: Array.from({ length: 49 }, (_, i) => i),
       countDigits: Array.from({ length: 12 }, (_, i) => i + 2),
-      exponent   : Array.from({ length: 200 }, (_, i) => i - 100),
-      negative   : [false, true],
-      value      : ({ lastDigits, countDigits, exponent, negative }) => {
+      exponent: Array.from({ length: 200 }, (_, i) => i - 100),
+      negative: [false, true],
+      value: ({ lastDigits, countDigits, exponent, negative }) => {
         return [createValue({ lastDigits, countDigits, exponent, negative })]
       },
     })()

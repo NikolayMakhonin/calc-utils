@@ -1,6 +1,7 @@
+import { describe, it } from 'vitest'
 import crypto from 'node:crypto'
-import {sha256} from './sha256'
-import {sha256Node} from './sha256Node'
+import { sha256 } from './sha256'
+import { sha256Node } from './sha256Node'
 
 export function test(data: string | Uint8Array | number[] | null | undefined) {
   if (data instanceof Array) {
@@ -9,7 +10,9 @@ export function test(data: string | Uint8Array | number[] | null | undefined) {
   const customHash = sha256(data)
   const nativeHash = sha256Node(data)
   if (customHash !== nativeHash) {
-    throw new Error(`Hash mismatch!\nCustom: ${customHash}\nNative: ${nativeHash}`)
+    throw new Error(
+      `Hash mismatch!\nCustom: ${customHash}\nNative: ${nativeHash}`,
+    )
   }
 }
 
@@ -30,7 +33,7 @@ describe('calcSha256', () => {
   })
 
   it('Boundary: 55, 56, 63, 64, 65 bytes', () => {
-    [55, 56, 63, 64, 65].forEach(size => {
+    ;[55, 56, 63, 64, 65].forEach(size => {
       const input = new Uint8Array(size).fill(0x41)
       test(input)
     })
@@ -44,13 +47,12 @@ describe('calcSha256', () => {
     }
   })
 
-  it('Large data: 2MB', function () {
-    this.timeout(5000)
-    const input = new Uint8Array(2 * 1024 * 1024).fill(0x7A)
+  it('Large data: 2MB', () => {
+    const input = new Uint8Array(2 * 1024 * 1024).fill(0x7a)
     test(input)
   })
 
-  xit('Errors: Unsupported types', () => {
+  it.skip('Errors: Unsupported types', () => {
     // @ts-expect-error
     assert.throws(() => sha256(123), /Unsupported content type/)
     // @ts-expect-error

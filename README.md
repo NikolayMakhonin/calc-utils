@@ -3,17 +3,17 @@
 [![Build Status][github-image]][github-url]
 <!-- [![Test Coverage][coveralls-image]][coveralls-url] -->
 
-Simple calc utils
+Simple simple utils
 
 # License
 
 [Unlimited Free](LICENSE)
 
-[npm-image]: https://img.shields.io/npm/v/@flemist/calc-utils.svg
-[npm-url]: https://npmjs.org/package/@flemist/calc-utils
-[downloads-image]: https://img.shields.io/npm/dm/@flemist/calc-utils.svg
-[downloads-url]: https://npmjs.org/package/@flemist/calc-utils
-[github-image]: https://github.com/NikolayMakhonin/calc-utils/actions/workflows/test.yml/badge.svg
-[github-url]: https://github.com/NikolayMakhonin/calc-utils/actions
-[coveralls-image]: https://coveralls.io/repos/github/NikolayMakhonin/calc-utils/badge.svg
-[coveralls-url]: https://coveralls.io/github/NikolayMakhonin/calc-utils
+[npm-image]: https://img.shields.io/npm/v/@flemist/simple-utils.svg
+[npm-url]: https://npmjs.org/package/@flemist/simple-utils
+[downloads-image]: https://img.shields.io/npm/dm/@flemist/simple-utils.svg
+[downloads-url]: https://npmjs.org/package/@flemist/simple-utils
+[github-image]: https://github.com/NikolayMakhonin/simple-utils/actions/workflows/test.yml/badge.svg
+[github-url]: https://github.com/NikolayMakhonin/simple-utils/actions
+[coveralls-image]: https://coveralls.io/repos/github/NikolayMakhonin/simple-utils/badge.svg
+[coveralls-url]: https://coveralls.io/github/NikolayMakhonin/simple-utils

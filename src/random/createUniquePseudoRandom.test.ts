@@ -1,11 +1,10 @@
+import { describe, it, expect } from 'vitest'
 import {
   createUniquePseudoRandom,
   UNIQUE_PSEUDO_RANDOM_MAX_COUNT,
 } from './createUniquePseudoRandom'
 
-describe('createUniquePseudoRandom', function () {
-  this.timeout(60 * 1000)
-
+describe('createUniquePseudoRandom', () => {
   it('base', () => {
     expect(() => createUniquePseudoRandom(0)).toThrow()
     expect(() => createUniquePseudoRandom(-1)).toThrow()

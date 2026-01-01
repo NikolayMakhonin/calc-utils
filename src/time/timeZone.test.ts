@@ -1,8 +1,9 @@
+import { describe, it, assert } from 'vitest'
 import { convertTimeZone } from './timeZone'
-import {dateToString} from "src/time/dateToString";
+import { dateToString } from './dateToString'
 
-describe('date', function () {
-  it('convertTimeZone', function () {
+describe('date', () => {
+  it('convertTimeZone', () => {
     // UTC, UTC
     assert.deepStrictEqual(
       convertTimeZone(new Date('2020-01-01T00:00:00.000Z'), 'UTC', 'UTC'),
@@ -88,7 +89,7 @@ describe('date', function () {
     }
   })
 
-  it('dateToString', function () {
+  it('dateToString', () => {
     assert.strictEqual(
       dateToString(new Date('2020-01-01T00:00:00.000Z'), 'UTC'),
       '2020-01-01 00:00:00',
@@ -115,7 +116,7 @@ describe('date', function () {
     )
   })
 
-  xit('convertTimeZone local', function () {
+  it.skip('convertTimeZone local', () => {
     // Local (+04:00), UTC
     assert.deepStrictEqual(
       convertTimeZone(new Date('2020-01-01T00:00:00.000Z'), null, 'UTC'),
@@ -149,7 +150,7 @@ describe('date', function () {
     )
   })
 
-  it('dateToString current', function () {
+  it('dateToString current', () => {
     console.log(
       `[test][timeZone] Current date UTC: ${dateToString(new Date(), 'UTC')}`,
     )
@@ -167,7 +168,7 @@ describe('date', function () {
     )
   })
 
-  it('parse', function () {
+  it('parse', () => {
     const date = new Date('2020-01-01')
     date.setMonth(date.getMonth() + 1)
     date.setMilliseconds(-1)

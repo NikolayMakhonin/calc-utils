@@ -1,4 +1,4 @@
-import {convertTimeZone} from 'src/time/timeZone'
+import { convertTimeZone } from './timeZone'
 
 /** @internal Default timeZone is Local */
 export function dateToString(date: Date, timeZone?: null | string): string {

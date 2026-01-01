@@ -1,6 +1,7 @@
+import { describe, it, expect } from 'vitest'
 import { numberMod } from './numberMod'
 
-describe('numberMod', function () {
+describe('numberMod', () => {
   function numberEquals(o1: number, o2: number, epsilon = 1e-10) {
     return Math.abs(o1 - o2) < epsilon
   }

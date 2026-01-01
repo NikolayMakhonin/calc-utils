@@ -8,19 +8,19 @@ export function convertTimeZone(
     timeZoneFrom == null
       ? date
       : new Date(
-        date.toLocaleString('en-US', {
-          timeZone: timeZoneFrom,
-        }),
-      )
+          date.toLocaleString('en-US', {
+            timeZone: timeZoneFrom,
+          }),
+        )
 
   const dateTo =
     timeZoneTo == null
       ? date
       : new Date(
-        date.toLocaleString('en-US', {
-          timeZone: timeZoneTo,
-        }),
-      )
+          date.toLocaleString('en-US', {
+            timeZone: timeZoneTo,
+          }),
+        )
 
   const result = new Date(
     date.getTime() + dateTo.getTime() - dateFrom.getTime(),

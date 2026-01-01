@@ -25,6 +25,14 @@ vite.config.ts.timestamp-*
 /..bfg-report
 /ngrok.yml
 /deps.dot
-/.idea/copilot*
-/.claude
 /ai
+
+# For .flemist-mcpignore
+!/ai
+/.idea
+/.husky/_
+**/temp
+**/tmp
+**/-temp
+**/-tmp
+!/tmp

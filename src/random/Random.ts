@@ -18,7 +18,7 @@ function randomWithoutSeed() {
 
 export function getRandomSeed(): number {
   // from: https://stackoverflow.com/a/47593316/5221762
-  return (Math.random() * (2 ** 32)) >>> 0
+  return (Math.random() * 2 ** 32) >>> 0
 }
 
 export function getRandomFunc(seed?: null | number) {
@@ -45,7 +45,7 @@ export class Random {
   nextSeed(): number {
     // return Math.floor(this.next() * (2 << 29)) // откуда здесь 29 - не помню
     // from: https://stackoverflow.com/a/47593316/5221762
-    return (this.next() * (2 ** 32)) >>> 0
+    return (this.next() * 2 ** 32) >>> 0
   }
 
   nextRandom(): Random {

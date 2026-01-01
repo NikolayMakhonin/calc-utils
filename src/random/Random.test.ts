@@ -1,21 +1,21 @@
 // noinspection PointlessBitwiseExpressionJS
-
+import { describe, it, expect } from 'vitest'
 import { Random } from './Random'
 
 describe('Random', () => {
   it('stats', () => {
     const statsExpected = {
-      sum       : 0,
-      sumSqr    : 0,
-      count     : 0,
-      avg       : 0,
+      sum: 0,
+      sumSqr: 0,
+      count: 0,
+      avg: 0,
       dispersion: 0,
     }
     const statsActual = {
-      sum       : 0,
-      sumSqr    : 0,
-      count     : 0,
-      avg       : 0,
+      sum: 0,
+      sumSqr: 0,
+      count: 0,
+      avg: 0,
       dispersion: 0,
     }
     const rnd = new Random(0)
@@ -40,7 +40,7 @@ describe('Random', () => {
       statsExpected.sumSqr / statsExpected.count - statsExpected.avg ** 2
     console.log('[test][Random] stats', {
       expected: statsExpected,
-      actual  : statsActual,
+      actual: statsActual,
     })
     expect(statsActual.avg).toBeCloseTo(statsExpected.avg, 3)
     expect(statsActual.dispersion).toBeCloseTo(statsExpected.dispersion, 3)

@@ -128,7 +128,7 @@ function latestOlderThan(meta: NpmMeta, days: number): null | string {
   if (debug) {
     log('Version date range:', {
       earliest: new Date(minTimestamp).toISOString(),
-      latest  : new Date(maxTimestamp).toISOString(),
+      latest: new Date(maxTimestamp).toISOString(),
     })
   }
 
@@ -169,7 +169,8 @@ async function fixDepsGroup(
     const time = meta.time
     const currentTime = time?.[current]
 
-    const isTooNew = !currentTime || !isOlderThan(currentTime, options.maxAgeDays)
+    const isTooNew =
+      !currentTime || !isOlderThan(currentTime, options.maxAgeDays)
     const needs = options.updateAll || isTooNew
     if (!needs) {
       if (debug) {
@@ -180,12 +181,11 @@ async function fixDepsGroup(
 
     const latest = latestOlderThan(meta, options.maxAgeDays)
     if (latest) {
-      fixed[name] = `^${latest}`
+      fixed[name] = `${latest}`
       if (debug) {
         log('Will fix', name, '→', latest)
       }
-    }
-    else {
+    } else {
       const allStable = Object.keys(time)
         .filter(v => v !== 'created' && v !== 'modified' && isStableVersion(v))
         .sort(
@@ -220,9 +220,9 @@ async function main(): Promise<void> {
   const pkg = await readJson(PKG_PATH)
 
   const allGroups: Record<string, Record<string, string>> = {
-    dependencies        : pkg.dependencies || {},
-    devDependencies     : pkg.devDependencies || {},
-    peerDependencies    : pkg.peerDependencies || {},
+    dependencies: pkg.dependencies || {},
+    devDependencies: pkg.devDependencies || {},
+    peerDependencies: pkg.peerDependencies || {},
     optionalDependencies: pkg.optionalDependencies || {},
   }
 
@@ -237,7 +237,7 @@ async function main(): Promise<void> {
   let changed = false
   for (const [group, fixed] of Object.entries(totalFixed)) {
     if (Object.keys(fixed).length) {
-      (pkg as any)[group] = { ...(pkg as any)[group], ...fixed }
+      ;(pkg as any)[group] = { ...(pkg as any)[group], ...fixed }
       changed = true
     }
   }
@@ -245,8 +245,7 @@ async function main(): Promise<void> {
   if (changed) {
     await writeJson(PKG_PATH, pkg)
     log('Dependencies fixed:', totalFixed)
-  }
-  else {
+  } else {
     log('No dependencies need fixing')
   }
 
