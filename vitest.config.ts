@@ -15,6 +15,7 @@ export default defineConfig(env =>
             include: [
               '**/*.{test,node}.{js,ts}',
               '!**/*.{browser,perf,manual,api,e2e}.{js,ts}',
+              '!src/browser/**',
             ],
           },
         },
@@ -28,11 +29,15 @@ export default defineConfig(env =>
             include: [
               '**/*.{test,browser}.{js,ts}',
               '!**/*.{node,perf,manual,api,e2e}.{js,ts}',
+              '!src/node/**',
             ],
             browser: {
               enabled: true,
               provider: 'playwright',
               headless: true,
+              ui: false,
+              screenshotDirectory: './tmp/test/screenshots',
+              screenshotFailures: false,
               // https://vitest.dev/guide/browser/playwright
               instances: [
                 { browser: 'chromium' },

@@ -476,6 +476,8 @@ describe('round', () => {
     test_roundPrecision(1.05e-50, 5, 1.05e-50)
   })
 
+  // Не может эта функция покрыть все случаи,
+  // а потому встает вопрос: нужна ли она
   it.skip('variants', async () => {
     await testVariants({
       lastDigits: Array.from({ length: 49 }, (_, i) => i),

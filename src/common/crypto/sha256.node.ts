@@ -1,4 +1,4 @@
-import { describe, it } from 'vitest'
+import { describe, it, assert } from 'vitest'
 import crypto from 'node:crypto'
 import { sha256 } from './sha256'
 import { sha256Node } from './sha256Node'
@@ -52,7 +52,7 @@ describe('calcSha256', () => {
     test(input)
   })
 
-  it.skip('Errors: Unsupported types', () => {
+  it('Errors: Unsupported types', () => {
     // @ts-expect-error
     assert.throws(() => sha256(123), /Unsupported content type/)
     // @ts-expect-error

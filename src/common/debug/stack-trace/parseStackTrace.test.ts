@@ -1,5 +1,4 @@
-import { describe, it } from 'vitest'
-import * as assert from 'assert'
+import { describe, it, assert } from 'vitest'
 import { parseStackTrace } from './parseStackTrace'
 
 describe('parseStackTrace', function () {
