@@ -9,7 +9,7 @@ name: Test
 
 jobs:
   test:
-    runs-on: arc-scale-set
+    runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.57.0-noble
     strategy:
@@ -27,17 +27,18 @@ jobs:
       # from: https://github.com/pnpm/action-setup
       - name: Install pnpm
         id: pnpm-install
-        uses: pnpm/action-setup@v2.1.0
+        uses: pnpm/action-setup@v4
         with:
           version: 10
           run_install: false
 
       - name: Get pnpm store directory
         id: pnpm-cache
+        shell: bash
         run: |
-          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Setup pnpm cache
         with:
           path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
@@ -47,7 +48,7 @@ jobs:
 
       # endregion
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install dependencies
         run: |
