@@ -42,9 +42,6 @@ importers:
       '@flemist/copy-glob-flat':
         specifier: 0.0.5
         version: 0.0.5
-      '@flemist/karma-custom-launcher':
-        specifier: 0.0.0
-        version: 0.0.0
       '@flemist/mcp-project-tools':
         specifier: 3.0.20
         version: 3.0.20
@@ -229,9 +226,6 @@ packages:
   '@flemist/copy-glob-flat@0.0.5':
     resolution: {integrity: sha512-nw2x3zS78uRv7jlR709oXiMXhtTlTS2+WJiy3aTabcayv50CNHMKXevv9WR7YjUJzS7743EdPJl5wAKjIq9Fdg==}
     hasBin: true
-
-  '@flemist/karma-custom-launcher@0.0.0':
-    resolution: {integrity: sha512-e2VP695n7G+ZG204f7xiXLkN88UeAr7cYKJcfjTDPD/3+dsau9dbLdhNXVOvC9DQXTVRZEA8UJ9qp7VA1ePgCA==}
 
   '@flemist/mcp-project-tools@3.0.20':
     resolution: {integrity: sha512-+UkeQdLBHRkqvZ8TuPXKP2CUWMLF3C+SqoIoEo4zbWhUXI4aBi0pcNd7CQNaA1kIzuVv8cp+m9WTQr2cX1g8qw==}
@@ -2981,11 +2975,6 @@ snapshots:
 
   '@flemist/copy-glob-flat@0.0.5':
     dependencies:
-      tslib: 2.8.1
-
-  '@flemist/karma-custom-launcher@0.0.0':
-    dependencies:
-      lodash: 4.17.21
       tslib: 2.8.1
 
   '@flemist/mcp-project-tools@3.0.20':
