@@ -7,6 +7,21 @@ export default defineConfig(env =>
       projects: [
         {
           extends: true,
+          resolve: {
+            conditions: ['node'],
+          },
+          test: {
+            name: {
+              label: 'dev',
+              // color: 'grey',
+            },
+          },
+        },
+        {
+          extends: true,
+          resolve: {
+            conditions: ['node'],
+          },
           test: {
             name: {
               label: 'node',
@@ -21,6 +36,9 @@ export default defineConfig(env =>
         },
         {
           extends: true,
+          resolve: {
+            conditions: ['browser'],
+          },
           test: {
             name: {
               label: 'browser',

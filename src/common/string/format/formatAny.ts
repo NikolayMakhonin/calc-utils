@@ -65,6 +65,10 @@ export function formatAny(
     return String(obj)
   }
 
+  if (obj instanceof Error) {
+    return obj.stack || obj.message || String(obj)
+  }
+
   if (obj instanceof Date) {
     return formatDate(obj)
   }

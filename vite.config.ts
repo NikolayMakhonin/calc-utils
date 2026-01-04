@@ -29,8 +29,6 @@ export default defineConfig(({ mode, isSsrBuild, command }) => {
       alias: {
         src: path.resolve('src'),
       },
-      // see: https://svelte.dev/docs/svelte/testing#Unit-and-integration-testing-using-Vitest
-      ...(process.env.VITEST ? { conditions: ['browser'] } : undefined),
     },
     build: {
       // minify: mode === 'production',
@@ -43,7 +41,6 @@ export default defineConfig(({ mode, isSsrBuild, command }) => {
         },
       },
       rollupOptions: {
-        external: ['rdtsc/node'],
         output: [
           {
             format: 'es',
@@ -69,7 +66,7 @@ export default defineConfig(({ mode, isSsrBuild, command }) => {
     },
     test: {
       include: [
-        '**/*.{test,node,perf,manual,api,e2e}.{js,ts}',
+        '**/*.{test,node,browser,chrome,perf,manual,stress,api,e2e}.{js,ts}',
         '!**/{tmp,temp,-tmp,-temp}/**',
         '!./*.ts',
       ],
